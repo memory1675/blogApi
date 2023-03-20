@@ -1,0 +1,42 @@
+# Vue-Router@4路由守卫
+
+* ### 全局守卫
+
+  在你的项目中，只要发生了路由的跳转就会触发全局守卫
+
+  * ##### 全局前置守卫
+
+    ```js
+    router.beforeEach((to,from) => {
+        //to、from路由跳转信息 => to.path....
+        //vue-router@3版本使用next()函数来指定是否继续跳转
+        //vue-router@4版本则改用return的返回值 true|false|path
+        //path 包含了对象形式的参数
+        return '/home'
+    })
+    ```
+
+  * ##### 全局解析守卫
+
+    ```js
+    router.beforeResolve(async to => {
+      if (to.meta.requiresCamera) {
+        try {
+          await askForCameraPermission()
+        } catch (error) {
+          if (error instanceof NotAllowedError) {
+            // ... 处理错误，然后取消导航
+            return false
+          } else {
+            // 意料之外的错误，取消导航并把错误传给全局处理器
+            throw error
+          }
+        }
+      }
+    })
+    ```
+
+    
+
+
+  
